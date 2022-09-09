@@ -24,6 +24,7 @@ const defaultOptions = {
     fontCache: "global",
   },
   liteAdaptor: {},
+  ignoreFiles: [],
 };
 
 module.exports = function (eleventyConfig, options = {}) {
@@ -50,7 +51,7 @@ module.exports = function (eleventyConfig, options = {}) {
   AssistiveMmlHandler(RegisterHTMLHandler(adaptor));
 
   eleventyConfig.addTransform("mathjax", function (content, outputPath) {
-    if (!(outputPath && outputPath.endsWith(".html"))) {
+    if (!(outputPath && outputPath.endsWith(".html")) || options.ignoreFiles?.includes(this.inputPath)) {
       return content;
     }
 
